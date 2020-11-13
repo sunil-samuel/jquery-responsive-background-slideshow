@@ -64,7 +64,7 @@ Complete option usage with data attributes:
 
 ## Examples
 
-Take a look at the [Demo](https://sunil-samuel.github.io/#jquery-rbs)
+Take a look at the [Demo](https://sunil-samuel.github.io/index.html#pages/jquery/rbs.html)
 
 The following examples are provided:
 
@@ -108,18 +108,18 @@ The following are options used to define which background image and transitions 
 >> The type of animation for the transition effect.  Currently only 'fade-in' is implemented.
 
 > **randomize** or **data-randomize** (default: false) [Boolean]
->> true - The images selected for the transition are picked randomly and not sequentially.
->> false - The images selected for the transition are picked sequentially starting from `current`.
+>> ***true*** - The images selected for the transition are picked randomly and not sequentially.<br>
+>> ***false*** - The images selected for the transition are picked sequentially starting from `current`.
 
 > **initialBackground** or **data-initialBackground** (default: null) [Number, 'random', url]
->> If set to anything other than null, then pick a background image from the list of images for the given element.
->> Number - A number between 0 and the length of the `images` array.  [0, images.length).  The background of the element is set to this image in the `images` array.
->> 'random' - The word 'random' indicate to pick a random image from the list of images in the `images` array to use as the initial background.
->> image url - The url to an image will be used as the background image for this element.
+>> If set to anything other than null, then pick a background image from the list of images for the given element.<br>
+>> ***Number*** - A number between 0 and the length of the `images` array.  [0, images.length).  The background of the element is set to this image in the `images` array.<br>
+>> ***'random'*** - The word 'random' indicate to pick a random image from the list of images in the `images` array to use as the initial background.<br>
+>> ***image url*** - The url to an image will be used as the background image for this element.
 
 > **debug** or **data-debug** (default: false) [Boolean]
->> true - Print debug messages to the log.console for debugging purposes.
->> false - No debug messages
+>> ***true*** - Print debug messages to the console.log for debugging purposes.<br>
+>> ***false*** - No debug messages
 
 ### Event Handlers
 

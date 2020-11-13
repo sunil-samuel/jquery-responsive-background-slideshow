@@ -36,7 +36,7 @@
 
 		var defaultOptions = $.extend({
 			// Start with element 0 as default.  Always 0 based.
-			current: 0,
+			current: -1,
 			// The list of images
 			images: [],
 			// Time in ms between the transition from one image to another
