@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JQuery Background Slideshow">
+<meta name="keywords" content="JQuery, background">
+<meta name="creator" content="Sunil Samuel">
+<meta name="copyright" content="Sunil Samuel">
+<meta name="version" content="$LastChangedRevision: 1122 $">
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../src/jquery-bg-slideshow.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$(".bg").bgSlideShow({
+			current : 1,
+			randomize : true
+		});
+	});
+</script>
+<style type="text/css">
+body {
+	text-align: center;
+}
+
+.bg {
+	height: 300px;
+	width: 100%;
+	border: 1px solid rgb(200, 200, 200);
+	background-color: white;
+	color: white;
+	font-size: 30pt;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	text-align: center;
+	text-shadow: 1px 1px 10px black;
+	margin: 0;
+	border-radius: 50vh;
+	box-shadow: 3px 3px 17px 2px #716464;
+}
+
+.wrap-bg-element {
+	width: 40%;
+	height: 300px;
+	display: inline-block;
+}
+</style>
+
+<title>JQuery Background Slideshow Example 2 (Multiple Elements)</title>
+</head>
+<body>
+	<div style="height: 30px;">This is an exampl that show two
+		different elements that have background images changing in different
+		speed</div>
+	<div class='bg' data-images="gfx/bar.jpg,gfx/clouds.jpg,gfx/swirls.jpg"
+		data-transitionDelay="5000" data-initialBackground="2">Some data
+		for widget one</div>
+	<div class='bg' data-images="gfx/bar.jpg,gfx/clouds.jpg,gfx/swirls.jpg"
+		data-debug="false" data-transitionDelay="7000"
+		data-transitionSpeed="3000">Some data for widget two</div>
+	<div style="height: 30px;">This is a div after the background div
+		to show that this plugin does not impact any elements after it</div>
+</body>
+</html>
