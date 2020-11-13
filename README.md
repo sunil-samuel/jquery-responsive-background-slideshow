@@ -1,3 +1,12 @@
+<p align='right'>
+<small>Sunil Samuel<br>
+web_github@sunilsamuel.com<br>
+http://www.sunilsamuel.com<br>
+https://sunil-samuel.github.io/#jquery-rbs
+</small>
+</p>
+
+
 # jquery-responsive-background-slideshow
 
 **JQuery Responsive Background Slideshow** :: Slideshow for the background using JQuery animation
@@ -8,16 +17,40 @@ JQuery plugin that can create a background slideshow.  This plugin works differe
 
 ```javascript
 <script type="text/javascript">
-	$(function() {
-		$(".bg").bgSlideShow();
-	});
+  $(function() {
+    $(".bg").bgSlideShow();
+  });
 </script>
 
 <body>
-	<div class=".bg">Hello</div>
+  <div class=".bg">Hello</div>
 </body>
 ```
 
+Complete option usage:
+
+```javascript
+<script type="text/javascript">
+  $(function () {
+    $(".bg").bgSlideShow({
+      current : 0,
+      images : ["../gfx/first.png", "../gfx/second.png"],
+      transitionDelay : 5000, // 5 seconds
+      transitionSpeed : 3000, // 3 seconds
+      transitionEffect : 'fade-in',
+      randomize : false, 
+      initialBackground : 'random',
+      debug : true,
+      eventHandlers : {
+        beforeInit: myBeforeInitFunc,
+        afterInit: myAfterInitFunc,
+        beforeChange : myBeforeChangeFunc,
+        afterChange : myAfterChangeFunc
+       }
+    });
+  });
+</script>
+```
 
 ## Examples
 
@@ -46,8 +79,9 @@ $(function () {
 <div class='bg' data-transitionSpeed=5000>content<div>
 ```
 	
-> **current ** or **data-current** (default: 0)
+>  **current ** or **data-current** (default: 0)
 >> Given the list of images, current defines which image to use first.  If `randomize` is set to 	`true`, then current is not used.
->>> <div data-current=0>content</div>
+>> <div data-current=0>content</div>
 
-> **image** 
+>  **images** or **data-images** (default: [])
+>>  List of images to use to create the background slideshow.

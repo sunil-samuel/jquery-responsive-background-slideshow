@@ -50,7 +50,7 @@
 			// If the initial image should also be rendered by this plugin
 			// if null - then do not do anything for the first image
 			// if a number or 'random' or an image url - then use the appropriate image
-			initialBackground: "random",
+			initialBackground: null,
 			// Print console.log debug messages for debug purposes
 			debug: false,
 			// Event handlers for different events
@@ -62,7 +62,7 @@
 				// Event before the existing image is replaced
 				beforeChange: null,
 				// Event after the existing image is replaced
-				afterChangeEvent: null
+				afterChange: null
 			}
 		}, options);
 
