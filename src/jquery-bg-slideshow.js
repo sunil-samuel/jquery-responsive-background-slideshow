@@ -33,6 +33,7 @@
 (function($) {
 	$.fn.bgSlideShow = function(options) {
 		var preloadedImages = new Array();
+
 		var defaultOptions = $.extend({
 			// Start with element 0 as default.  Always 0 based.
 			current: 0,
