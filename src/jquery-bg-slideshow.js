@@ -212,6 +212,9 @@
 			debug(settings.debug, "Calling timer for element [" + element + "]");
 			var nextImage = getNextImage(settings);
 			debug(settings.debug, "Next image is [" + nextImage + "]");
+			if (settings.eventHandlers.beforeChange) {
+				settings.eventHandlers.beforeChange(element, settings, nextImage);
+			}
 			settings.cloned = $(element).clone();
 			$(settings.cloned).addClass("cloned").css({
 				"z-index": -100,
@@ -230,6 +233,9 @@
 				});
 				var removed = $(settings.cloned).remove();
 				debug(settings.debug, "Total removed [" + removed.length + "]");
+				if (settings.eventHandlers.afterChange) {
+					settings.eventHandlers.afterChange(element, settings, nextImage);
+				}
 				settings.timerId = setTimeout(timeoutEvent, settings.transitionDelay, element, settings);
 			});
 		}

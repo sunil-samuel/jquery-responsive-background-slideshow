@@ -27,29 +27,39 @@ JQuery plugin that can create a background slideshow.  This plugin works differe
 </body>
 ```
 
-Complete option usage:
+Complete option usage with JavaScript:
 
 ```javascript
-<script type="text/javascript">
-  $(function () {
-    $(".bg").bgSlideShow({
-      current : 0,
-      images : ["../gfx/first.png", "../gfx/second.png"],
-      transitionDelay : 5000, // 5 seconds
-      transitionSpeed : 3000, // 3 seconds
-      transitionEffect : 'fade-in',
-      randomize : false, 
-      initialBackground : 'random',
-      debug : true,
-      eventHandlers : {
-        beforeInit: myBeforeInitFunc,
-        afterInit: myAfterInitFunc,
-        beforeChange : myBeforeChangeFunc,
-        afterChange : myAfterChangeFunc
-       }
-    });
+$(function () {
+  $(".bg").bgSlideShow({
+    current : 0,
+    images : ["../gfx/first.png", "../gfx/second.png"],
+    transitionDelay : 5000, // 5 seconds
+    transitionSpeed : 3000, // 3 seconds
+    transitionEffect : 'fade-in',
+    randomize : false, 
+    initialBackground : 'random',
+    debug : true,
+    eventHandlers : {
+      beforeInit: myBeforeInitFunc,
+      afterInit: myAfterInitFunc,
+      beforeChange : myBeforeChangeFunc,
+      afterChange : myAfterChangeFunc
+     }
   });
-</script>
+});
+```
+
+Complete option usage with data attributes:
+
+```html
+<div class='bg' data-current="0"
+  data-images="../gfx/first.png,../gfx/second.png"
+  data-transitionDelay="5000" data-transitionSpeed="3000"
+  data-transitionEffect="fade-in" data-randomize="true"
+  data-initialBackground="2" data-debug="false">
+      HTML content for the div
+</div>
 ```
 
 ## Examples
@@ -78,10 +88,51 @@ $(function () {
 
 <div class='bg' data-transitionSpeed=5000>content<div>
 ```
-	
->  **current ** or **data-current** (default: 0)
->> Given the list of images, current defines which image to use first.  If `randomize` is set to 	`true`, then current is not used.
->> <div data-current=0>content</div>
+### Background Image Directives
 
->  **images** or **data-images** (default: [])
+The following are options used to define which background image and transitions are used.
+
+>  **current ** or **data-current** (default: 0) [Number]
+>> Given the list of images, current defines which image to use first.  If `randomize` is set to 	`true`, then current is not used.
+
+>  **images** or **data-images** (default: []) [Array of Strings]
 >>  List of images to use to create the background slideshow.
+
+> **transitionDelay** or **data-transitionDelay** (default: 5000 or 5 seconds) [Number]
+>> Amount of milliseconds to wait before starting the next transition to the next image.
+
+> **transitionSpeed** or **data-transitionSpeed** (default: 3000 or 3 seconds) [Number]
+>> Amount of milliseconds for the transition effect to take
+
+> **transitionEffect** or **data-transitionEffect** (default: fade-in) [String]
+>> The type of animation for the transition effect.  Currently only 'fade-in' is implemented.
+
+> **randomize** or **data-randomize** (default: false) [Boolean]
+>> true - The images selected for the transition are picked randomly and not sequentially.
+>> false - The images selected for the transition are picked sequentially starting from `current`.
+
+> **initialBackground** or **data-initialBackground** (default: null) [Number, 'random', url]
+>> If set to anything other than null, then pick a background image from the list of images for the given element.
+>> Number - A number between 0 and the length of the `images` array.  [0, images.length).  The background of the element is set to this image in the `images` array.
+>> 'random' - The word 'random' indicate to pick a random image from the list of images in the `images` array to use as the initial background.
+>> image url - The url to an image will be used as the background image for this element.
+
+> **debug** or **data-debug** (default: false) [Boolean]
+>> true - Print debug messages to the log.console for debugging purposes.
+>> false - No debug messages
+
+### Event Handlers
+
+Events handlers will be invoked for different events.  All event handlers are defaulted to null.
+
+> **beforeInit** - arguments (element, settings)
+>> Event triggered before any of the processing is started.
+
+> **afterInit** arguments (element, settings)
+>> Event triggered after the processing is completed and the timer is set
+
+> **beforeChange** arguments (element, settings, nextImage)
+>> Event triggered before the transition from the existing image to the next image.  The current image can be accessed using $(element).css("background-image")
+
+> **afterChange** arguments (element, settings, currentImage)
+>> Event triggered after the transition from current image to the next image is complete.
