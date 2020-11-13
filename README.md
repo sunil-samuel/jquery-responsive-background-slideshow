@@ -81,9 +81,9 @@ For instance,
 
 ```javascript
 $(function () {
-	$(".bg").bgSlideShow({
-		transitionSpeed : 3000
-	});
+  $(".bg").bgSlideShow({
+    transitionSpeed : 3000
+  });
 });
 
 <div class='bg' data-transitionSpeed=5000>content<div>
@@ -92,7 +92,7 @@ $(function () {
 
 The following are options used to define which background image and transitions are used.
 
->  **current ** or **data-current** (default: 0) [Number]
+>  **current** or **data-current** (default: 0) [Number]
 >> Given the list of images, current defines which image to use first.  If `randomize` is set to 	`true`, then current is not used.
 
 >  **images** or **data-images** (default: []) [Array of Strings]
