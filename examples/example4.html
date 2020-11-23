@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JQuery Background Slideshow">
+<meta name="keywords" content="JQuery, background">
+<meta name="creator" content="Sunil Samuel">
+<meta name="copyright" content="Sunil Samuel">
+<meta name="version" content="$LastChangedRevision: 1122 $">
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../src/js/jquery-bg-slideshow.js"></script>
+
+<link rel="stylesheet" href="../src/css/jquery-bg-slideshow.css">
+<script type="text/javascript">
+	$(function() {
+		$(".bg").bgSlideShow({
+			current : 0,
+			randomize : false,
+			images : [ "gfx/circles.jpg", "gfx/hash.jpg", "gfx/leaves.jpg" ],
+			initialBackground : 'random',
+			transitionDelay : 2000,
+			slideControls : {
+				enabled : false
+			}
+		});
+	});
+</script>
+<style type="text/css">
+body {
+	text-align: center;
+	height: 100%;
+	background-color: white;
+	color: white;
+	font-size: 30pt;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	margin: 0;
+}
+
+.jquery-bg-slideshow-wrap-bg-element {
+	width: 100%;
+	height: 100%;
+}
+
+.bg {
+	height: 100%;
+	width: 100%;
+	background-color: white;
+	color: white;
+	font-size: 30pt;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	text-align: center;
+	text-shadow: 1px 1px 10px black;
+	margin: 0;
+}
+</style>
+
+<title>JQuery Background Slideshow Example 2 (Multiple Elements)</title>
+</head>
+<body>
+	<div class="bg">Full Page Background without Slide Controls</div>
+</body>
+</html>

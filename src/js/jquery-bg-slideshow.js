@@ -63,6 +63,12 @@
 				beforeChange: null,
 				// Event after the existing image is replaced
 				afterChange: null
+			},
+			// Controls the list control icons.  The small ball on the bottom
+			// of the image for the user to go to a specific image.
+			slideControls: {
+				enabled: true,
+				classes: null
 			}
 		}, options);
 
@@ -106,24 +112,34 @@
 		 */
 		function getSettings(elmt, s) {
 			var thisSetting = {};
+			thisSetting.uniqueId = getUniqueId(elmt);
 			thisSetting.current = $(elmt).data("current") || s.current || 0;
 			thisSetting.images = s.images;
+			thisSetting.slideControls = s.slideControls;
+			// List controls
+			thisSetting.slideControls.enabled = $(elmt).data("slidecontrols.enabled") || s.slideControls.enabled;
+			thisSetting.slideControls.classes = $(elmt).data("slidecontrols.classes") || s.slideControls.classes;
+			//			thisSetting.slideControls.size = $(elmt).data("slideControls.size") || s.slideControls.size;
+			//			thisSetting.slideControls.spaceBetween = $(elmt).data("slideControls.spacebetween") || s.slideControls.spaceBetween;
+			//			thisSetting.slideControls.backgroundColor = $(elmt).data("slideControls.backgroundcolor") || s.slideControls.backgroundColor;
+			//			thisSetting.slideControls.borderColor = $(elmt).data("slideControls.bordercolor") || s.slideControls.borderColor;
+			//			thisSetting.slideControls.borderSize = $(elmt).data("slideControls.bordersize") || s.slideControls.borderSize;
+
 			// Images are comma separated, so we need to split that into arrays
 			if ($(elmt).data("images")) {
 				thisSetting.images = $(elmt).data("images").split(",").map(item => item.trim());
 			}
 			thisSetting.initialBackground = $(elmt).data("initialbackground") || s.initialBackground;
-			thisSetting.transitionDelay = $(elmt).data("transitionDelay") || s.transitionDelay;
+			thisSetting.transitionDelay = $(elmt).data("transitiondelay") || s.transitionDelay;
 			thisSetting.transitionSpeed = $(elmt).data("transitionspeed") || s.transitionSpeed;
 			thisSetting.transitionEffect = $(elmt).data("transitioneffect") || s.transitionEffect;
 			thisSetting.randomize = getBoolean($(elmt).data("randomize"), s.randomize);
 			thisSetting.debug = getBoolean($(elmt).data("debug"), s.debug);
 			thisSetting.eventHandlers = s.eventHandlers;
-			// If the element already has a 'display', css tag, then lets keep that insteat
+			// If the element already has a 'display', css tag, then lets keep that instead
 			// of going to block.
 			thisSetting.defaultDisplay = $(elmt).css("display") || "block";
 
-			debug(thisSetting.debug, "TransitiontTime [" + thisSetting.transitionDelay + "] transitionSpeed [" + thisSetting.transitionSpeed + "]");
 			return thisSetting;
 		}
 
@@ -167,15 +183,66 @@
 			// Check if we need to set the initial image
 			setInitialImage(element, settings);
 			// Preload all of the images
+			// FIXME - Do in another thread
 			preloadImages(settings.images);
-			//var height = $(element).height();
 			// Wrap an element around this element with certain
 			// css attributes.
-			//$(element).wrap("<div class='wrap-bg-element' style='position:relative;height:" + height + "';></div>");
-			$(element).wrap("<div class='wrap-bg-element' style='position:relative;';></div>");
-			$(element).css("position", "absolute");
+			settings.wrapBgElement = $('<div/>', {
+				class: 'jquery-bg-slideshow-wrap-bg-element',
+				id: settings.uniqueId + "-wrap-widget"
+			});
+			$(element).wrap(settings.wrapBgElement);
+			var wrappedElement = $(element).css("position", "absolute");
+			createImageSlideControls(element, wrappedElement.parent(), settings);
 			debug(settings.debug, "Setting timeout for element [" + element + "]");
 			settings.timerId = setTimeout(timeoutEvent, settings.transitionDelay, element, settings);
+		}
+
+		/**
+		 * Create a list of small 'ball' images on the bottom of the image for the user
+		 * to click to view diffferent images.
+		 */
+		function createImageSlideControls(element, wrappedElement, settings) {
+			debug(settings.debug, "List controls enabled: " + settings.slideControls.enabled);
+			if (settings.slideControls.enabled == true) {
+				settings.slideControlsElement = $('<div/>', {
+					class: "jquery-bg-slideshow-list-control-element" +
+						(settings.slideControls.classes ? " " + settings.slideControls.classes : ""),
+				});
+
+				var ilen = settings.images.length;
+				for (var i = 0; i < ilen; i++) {
+					var id = settings.uniqueId + "-image" + i;
+					$("<div/>", {
+						class: "jquery-bg-slideshow-list-control-image-element",
+						id: id
+					}).appendTo(settings.slideControlsElement);
+				}
+				$(wrappedElement).append(settings.slideControlsElement);
+				$("[id^='" + settings.uniqueId + "-image']").off("click").on("click", function() {
+					$(settings.cloned).remove();
+					// Id will give us image number
+					var id = $(this).attr("id");
+					var imageOffset = parseInt(id.match(/-image(\d+)/)[1]);
+					settings.current = imageOffset + 1;
+					$(element).css("background-image", "url(" + settings.images[imageOffset] + ")");
+					console.log("clicked on [" + $(this).attr("id") + "]");
+				});
+			}
+		}
+
+		function getUniqueId(element) {
+			var id = $(element).attr("id");
+			if (!id) {
+				id = generateUniqueId();
+			}
+			return id;
+		}
+
+		function generateUniqueId() {
+			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			var rval = characters.charAt(Math.floor(Math.random() * characters.length)) + Date.now();
+			return rval;
 		}
 
 		/**
@@ -211,15 +278,22 @@
 		function timeoutEvent(element, settings) {
 			debug(settings.debug, "Calling timer for element [" + element + "]");
 			var nextImage = getNextImage(settings);
-			debug(settings.debug, "Next image is [" + nextImage + "]");
+
+			slideBackgroundImage(element, settings, nextImage);
+		}
+
+		/**
+		 * Slide the background now given the next image.
+		 */
+		function slideBackgroundImage(element, settings, nextImage) {
 			if (settings.eventHandlers.beforeChange) {
 				settings.eventHandlers.beforeChange(element, settings, nextImage);
 			}
+			if ($(settings.cloned).length) {
+				$(settings.cloned).remove();
+			}
 			settings.cloned = $(element).clone();
-			$(settings.cloned).addClass("cloned").css({
-				"z-index": -100,
-				//				"position": "relative",
-				"display": "none",
+			$(settings.cloned).addClass("jquery-bg-slideshow-cloned").css({
 				"background-image": "url(" + nextImage + ")"
 			}).insertAfter($(element));
 			$(settings.cloned).css("display", settings.defaultDisplay);

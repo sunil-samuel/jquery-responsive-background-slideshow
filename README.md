@@ -45,6 +45,10 @@ $(function () {
       afterInit: myAfterInitFunc,
       beforeChange : myBeforeChangeFunc,
       afterChange : myAfterChangeFunc
+     },
+     slideControls: {
+       enabled: true,
+       classes: 'something'
      }
   });
 });
@@ -120,6 +124,17 @@ The following are options used to define which background image and transitions 
 > **debug** or **data-debug** (default: false) [Boolean]
 >> ***true*** - Print debug messages to the console.log for debugging purposes.<br>
 >> ***false*** - No debug messages
+
+### Slide Controls
+
+Slide controls define whether to show the small 'ball' element in the middle of the image
+for the user to select which image to view.
+
+> **enabled** or **data-slidecontrols.enabled** (default: true) [Boolean]
+>> Enable the slide controls so that the user will be able to see it.
+
+> **classes** or **data-slidecontrols.classes** (default:null) [String]
+>> Define one or more class(es) to add to the div that sets the slide control.
 
 ### Event Handlers
 
