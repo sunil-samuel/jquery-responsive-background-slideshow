@@ -195,6 +195,7 @@
 			var wrappedElement = $(element).css("position", "absolute");
 			createImageSlideControls(element, wrappedElement.parent(), settings);
 			debug(settings.debug, "Setting timeout for element [" + element + "]");
+			updateCurrentSlideElement(settings, settings.current);
 			settings.timerId = setTimeout(timeoutEvent, settings.transitionDelay, element, settings);
 		}
 
@@ -226,11 +227,16 @@
 					var imageOffset = parseInt(id.match(/-image(\d+)/)[1]);
 					settings.current = imageOffset + 1;
 					$(element).css("background-image", "url(" + settings.images[imageOffset] + ")");
+					updateCurrentSlideElement(settings, settings.current - 1);
 					console.log("clicked on [" + $(this).attr("id") + "]");
 				});
 			}
 		}
 
+		/**
+		 * Given an element, if it has a id attribute, then return it otherwise create a unique
+	     * id and return it.
+		 */
 		function getUniqueId(element) {
 			var id = $(element).attr("id");
 			if (!id) {
@@ -239,6 +245,9 @@
 			return id;
 		}
 
+		/**
+		 * Generate a unique id based on random character and current date in ms.
+		 */
 		function generateUniqueId() {
 			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			var rval = characters.charAt(Math.floor(Math.random() * characters.length)) + Date.now();
@@ -310,8 +319,17 @@
 				if (settings.eventHandlers.afterChange) {
 					settings.eventHandlers.afterChange(element, settings, nextImage);
 				}
+				updateCurrentSlideElement(settings, settings.current);
 				settings.timerId = setTimeout(timeoutEvent, settings.transitionDelay, element, settings);
 			});
+		}
+
+		function updateCurrentSlideElement(settings, current) {
+			if (settings.slideControls.enabled) {
+				var id = "#" + settings.uniqueId + "-image" + current;
+				$("[id^='" + settings.uniqueId + "-image']").removeClass("jquery-bg-slideshow-list-control-image-active-element");
+				$(id).addClass("jquery-bg-slideshow-list-control-image-active-element");
+			}
 		}
 
 		/**

@@ -38,6 +38,19 @@
 }
 
 /*
+ * This is the class that highlights which image is being displayed
+ * within the list control.  That is, the small 'ball' on the bottom
+ * of the page.
+ */
+.jquery-bg-slideshow-list-control-image-active-element {
+	background-color: red;
+	height: 10px;
+	width: 10px;
+	border-radius: 10px;
+	transition: background-color 0.5s ease;
+}
+
+/*
  * This is the class used to  store the cloned element.  This
  * will be in the background as the other one fades out.
  */
