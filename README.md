@@ -13,6 +13,13 @@ https://sunil-samuel.github.io/#jquery-rbs
 
 JQuery plugin that can create a background slideshow.  This plugin works differently than a carousel plugin in that the content of the element do not need to change while the background images changes.
 
+```
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script src="../src/js/jquery-bg-slideshow.js"></script>
+<link rel="stylesheet" href="../src/css/jquery-bg-slideshow.css">
+```
+
 ## Usage
 
 ```javascript
@@ -80,6 +87,14 @@ The following examples are provided:
 
 Each option parameter has a corresponding data attribute so that multiple elements could have different option parameters.  The ***data-*** attribute always has the precedence over the options
 provide when calling the ***.bgSlideShow({options...})*** plugin.
+
+```html
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../src/js/jquery-bg-slideshow.js"></script>
+
+<link rel="stylesheet" href="../src/css/jquery-bg-slideshow.css">
+```
+
 
 For instance,
 
