@@ -166,3 +166,12 @@ Events handlers will be invoked for different events.  All event handlers are de
 
 > **afterChange** arguments (element, settings, currentImage)
 >> Event triggered after the transition from current image to the next image is complete.
+
+### Helper Function
+**bgSlideshowApplied()** is a method that can be used against an element to see if the slideshow is applied.
+
+```javascript
+if($(".bg").bgSlideshowApplied()) {
+    console.log ("slideshow applied on .bg element");
+}
+```

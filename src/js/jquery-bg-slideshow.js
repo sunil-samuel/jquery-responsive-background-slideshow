@@ -180,6 +180,8 @@
 		 */
 		function processElement(element, settings) {
 			debug(settings.debug, "ProcessShow with element [" + element + "]");
+
+			$(element).data("bgSlideShowApplied", true);
 			// Check if we need to set the initial image
 			setInitialImage(element, settings);
 			// Preload all of the images
@@ -344,4 +346,12 @@
 			}
 		}
 	};
+
+	/**
+	 * Helper function to check if plugin is applied
+	 */
+	$.fn.bgSlideshowApplied = function() {
+		return $(this).data("bgSlideShowApplied") == true ? true : false;
+	}
+
 }(jQuery));
