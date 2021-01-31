@@ -2,6 +2,7 @@
  * Author  : Sunil Samuel (web_github@sunilsamuel.com)
  * License : GPLv3
  * GIT URL : https://github.com/sunil-samuel/jquery-responsive-background-slideshow
+ * Version: 1.5
  * ______                                _           
  * | ___ \                              (_)          
  * | |_/ /___  ___ _ __   ___  _ __  ___ ___   _____ 
@@ -316,8 +317,8 @@
 					"position": "absolute",
 					"display": settings.defaultDisplay
 				});
-				var removed = $(settings.cloned).remove();
-				debug(settings.debug, "Total removed [" + removed.length + "]");
+				//var removed = $(settings.cloned).remove();
+				//debug(settings.debug, "Total removed [" + removed.length + "]");
 				if (settings.eventHandlers.afterChange) {
 					settings.eventHandlers.afterChange(element, settings, nextImage);
 				}
